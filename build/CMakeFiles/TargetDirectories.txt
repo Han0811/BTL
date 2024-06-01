@@ -1,0 +1,3 @@
+D:/BIGASSIGNMENT/build/CMakeFiles/BTL.dir
+D:/BIGASSIGNMENT/build/CMakeFiles/ALL_BUILD.dir
+D:/BIGASSIGNMENT/build/CMakeFiles/ZERO_CHECK.dir
