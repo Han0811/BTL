@@ -37,5 +37,6 @@ BNNODE FindBNBefore(DSBN dsbn,string cccd);
 void DeleteBN(DSBN& dsbn, string cccd);
 void FixBN(DSBN& dsbn, string cccd);
 void ArrangeBN(DSBN& dsbn);
+Dich_vu Select_Service(DSDV dsdv);
 void printfBN(DSBN S);
 #endif

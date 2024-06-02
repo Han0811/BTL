@@ -202,3 +202,17 @@ void printfBN(DSBN S) {
         R = R->nextBN;
     }
 }
+Dich_vu Select_Service(DSDV dsdv){
+    cout << "Chon dich vu: ";
+    int x;
+    printfDV(dsdv);
+    cin >> x;
+    switch (x)
+    {
+    case 1:
+        return (dsdv->DV);
+        break;
+    default:
+        break;
+    }
+}
