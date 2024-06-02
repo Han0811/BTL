@@ -7,7 +7,7 @@ long SumBN(DSBN S){
 }
 
 long SumDV(DSDV S){
-	int a;
+	long a = 0;
 	DSDV p = S;
 	while(p != NULL){
 		a += p->DV.Gia_DV;
@@ -31,6 +31,10 @@ long sumT(DSThuoc S) {
 }
 
 void printfDV(DSDV S) {
+     if(S == NULL){
+        cout<<"Danh sach dich vu rong"<<endl;
+        return;
+    }
     S->TongtienDV = SumDV(S);
     int n = 0;
     DSDV P = S;

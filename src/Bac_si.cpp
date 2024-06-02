@@ -10,7 +10,7 @@ void InitBS(DSBS &H) {
     H = NULL;
 }
 
-// Them bác si d? t?o danh sách
+// Thêm Bác sĩ tạo danh sách
 void InsertBSS(DSBS &H, Bac_si K) {
     BSNODE Q = new NODEBS;
     Q->BS = K;

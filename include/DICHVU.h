@@ -11,7 +11,7 @@ struct Dich_vu {
     long Gia_DV;
 };
 
-struct NODEDV {
+struct NODEDV { 
     Dich_vu DV;
     long TongtienDV;
     NODEDV* nextDV;
@@ -22,13 +22,13 @@ typedef NODEDV* DSDV;
 
 
 //Khai báo nguyên mẫu hàm dịch vụ
-void InsertDV(DSDV &dsdv, Dich_vu DV);
 void InitDV(DSDV& dsdv);
-void DeleteDV(DSDV& dsdv, string serviceName);
-Dich_vu FindDV(DSDV dsdv, string serviceName);
-void ArrangeDV(DSDV& dsdv);
-void FixDV(DSDV& dsdv, string serviceName, long newPrice);
-void NhapDichVu(DSDV& dsdv);
-void printfDV(DSDV S);
-
+int emptyDV(DSDV S);
+DVNODE makenodeDV(Dich_vu T1);
+void DeleteDV(DSDV& S, string name);
+DVNODE FindDV(DSDV S, string name);
+void ArrangeDV(DSDV& S, Dich_vu T1);
+void FixDV(DSDV& S, string name, long newPrice);
+void NhapDichVu(DSDV& S);
+void DisplayDV(DSDV S);
 #endif 

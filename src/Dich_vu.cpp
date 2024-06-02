@@ -3,91 +3,117 @@
 #include "DICHVU.h"
 
 using namespace std;
+
 void InitDV(DSDV& dsdv){
     dsdv = NULL;
 }
-void DeleteDV(DSDV& dsdv, string serviceName) {
-    DVNODE prevNode = 0;
-    DVNODE currentNode = dsdv;
-    while (currentNode != 0) {
-        if (currentNode->DV.Ten_DV == serviceName) {
-            if (prevNode == 0) {
-                dsdv = currentNode->nextDV;
-            } else {
-                prevNode->nextDV = currentNode->nextDV;
-            }
-            delete currentNode;
-            return;
-        }
-        prevNode = currentNode;
-        currentNode = currentNode->nextDV;
-    }
-    cout << "Khong tim tahy dich vu." << endl;
+int emptyDV(DSDV S) {
+    return S == NULL;
 }
 
-// tim kiem dich vu
-Dich_vu FindDV(DSDV dsdv, string serviceName) {
-    DVNODE currentNode = dsdv;
-    while (currentNode != 0) {
-        if (currentNode->DV.Ten_DV == serviceName) {
-            return currentNode->DV;
-        }
-        currentNode = currentNode->nextDV;
-    }
-    
-    Dich_vu defaultService;
-    defaultService.Ten_DV = "Khong tim thay dich vu";
-    return defaultService;
+DVNODE makenodeDV(Dich_vu T1) {
+    DVNODE node = new NODEDV;
+    node->DV = T1;
+    node->nextDV = NULL;
+    return node;
 }
 
-// sap xep dich vu theo gia tang dan
-void ArrangeDV(DSDV& dsdv) {
-    DVNODE currentNode = dsdv;
-    while (currentNode != 0) {
-        DVNODE nextNode = currentNode->nextDV;
-        while (nextNode !=0) {
-            if (currentNode->DV.Gia_DV > nextNode->DV.Gia_DV) {
-                swap(currentNode->DV, nextNode->DV);
-            }
-            nextNode = nextNode->nextDV;
-        }
-        currentNode = currentNode->nextDV;
+DVNODE FindDV(DSDV S, string name) {
+    DSDV p = S;
+    while (p != NULL && p->DV.Ten_DV != name) {
+        p = p->nextDV;
     }
-}
-// Th?m dich vu moi
-void InsertDV(DSDV& dsdv, Dich_vu newService) {
-    DVNODE newNode = new NODEDV;
-    newNode->DV = newService;
-    newNode->nextDV = dsdv;
-    dsdv = newNode;
-}
-// Sua thong tin dich vu
-void FixDV(DSDV& dsdv, string serviceName, long newPrice) {
-    DVNODE currentNode = dsdv;
-    while (currentNode != 0) {
-        if (currentNode->DV.Ten_DV == serviceName) {
-            currentNode->DV.Gia_DV = newPrice;
-            return;
-        }
-        currentNode = currentNode->nextDV;
+    if (p == NULL) {
+        return NULL;
     }
-    cout << "khong tim thay dich vu." << endl;
+    else {
+        return p;
+    }
 }
 
-// Nhap thong tin dich vu
-void NhapDichVu(DSDV& dsdv) {
+void DeleteDV(DSDV& S, string name) {
+    if (emptyDV(S)) {
+        cout << "Danh Sach Rong" << endl;
+        return;
+    }
+    DVNODE P = FindDV(S, name);
+    if (P == NULL) {
+        cout << "Khong co dich vu: " << name << " trong danh sach" << endl;
+        return;
+    }
+
+    if (S == P) {
+        S = S->nextDV;
+        delete P;
+    }
+    else {
+        DVNODE R = S;
+        while (R->nextDV != P) R = R->nextDV;
+        R->nextDV = P->nextDV;
+        delete P;
+    }
+}
+
+void ArrangeDV(DSDV& S, Dich_vu T1) {
+    DVNODE P = makenodeDV(T1);
+    if (emptyDV(S)) {
+        S = P;
+    }
+    else {
+        if (P->DV.Ten_DV[0] <= 'A') {
+            P->nextDV = S;
+            S = P;
+        }
+        else {
+            DVNODE R = S;
+            while (R->nextDV != NULL && R->nextDV->DV.Ten_DV < P->DV.Ten_DV) R = R->nextDV;
+            P->nextDV = R->nextDV;
+            R->nextDV = P;
+        }
+    }
+}
+
+void FixDV(DSDV& S, string name, long newPrice) {
+    if (emptyDV(S)) {
+        cout << "Danh Sach Rong" << endl;
+        return;
+    }
+    DVNODE p = FindDV(S, name);
+    if (p == NULL) {
+        cout << "Khong co dich vu: " << name << " trong danh sach" << endl;
+        return;
+    }
+    p->DV.Gia_DV = newPrice;
+    cout << "Da thay doi gia dich vu." << endl;
+}
+
+void NhapDichVu(DSDV& S) {
     int x = 1;
-    while(x==1){
+    while (x == 1) {
         cin.ignore();
-	    Dich_vu newService;
+        Dich_vu DV;
         cout << "Nhap ten dich vu: ";
-        getline(cin,newService.Ten_DV);
+        getline(cin, DV.Ten_DV);
         cout << "Nhap gia dich vu: ";
-        cin >> newService.Gia_DV;
-        InsertDV(dsdv, newService);
-        cout << "0.khong , 1.nhap tiep: " ; cin >> x;
-        while(x != 1 && x !=0){
-    	    cout << "Nhap lai: " ; cin >> x;
-	    }
+        cin >> DV.Gia_DV;
+        ArrangeDV(S, DV);
+        cout << "0. Khong, 1. Nhap tiep: ";
+        cin >> x;
+        while (x != 1 && x != 0) {
+            cout << "Nhap lai: ";
+            cin >> x;
+        }
+    }
+}
+
+void DisplayDV(DSDV S) {
+    if (emptyDV(S)) {
+        cout << "Danh Sach Rong" << endl;
+        return;
+    }
+    DVNODE p = S;
+    while (p != NULL) {
+        cout << "Ten dich vu: " << p->DV.Ten_DV << ", Gia dich vu: " << p->DV.Gia_DV << endl;
+        p = p->nextDV;
     }
 }

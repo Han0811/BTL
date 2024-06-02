@@ -16,7 +16,7 @@ int IsEmpty(DSBN dsbn) {
 }
 
 // Tao ra 1 NODE moi bang cach nhap tu ban phim vao
-Benh_nhan Create(DSThuoc S,DSDV dsdv) {
+Benh_nhan Create(DSThuoc S, DSDV dsdv) {
     Benh_nhan A;
     cin.ignore();
     cout << "Ho va ten:";
@@ -33,13 +33,15 @@ Benh_nhan Create(DSThuoc S,DSDV dsdv) {
     cout << "SDT:"; cin >> A.SDT;
     cout << "BHYT (1. Co, 0. Khong):" << endl;
     cin >> A.Bao_hiem;
-    cout<<"Nhap ten dich vu"<<endl;
     string name;
+    DisplayDV(dsdv);
+    cout<<"Nhap ten dich vu"<<endl;
     cin.ignore();
     getline(cin,name); 
-    Dich_vu service = FindDV(dsdv,name);
-    service = FindDV(dsdv,name);
-    InsertDV(A.DV,service);
+    DVNODE service = FindDV(dsdv,name);
+    Dich_vu SV = service->DV;
+    InitDV(A.DV);
+    ArrangeDV(A.DV, SV);
     return A;
 }
 void NhapThuoc(DSBN& dsbn,DSThuoc S,DSDV dsdv,BNNODE A){    
@@ -192,7 +194,10 @@ void printfBN(DSBN S) {
         cout << "Bao hiem: " << R->BN.Bao_hiem << endl;
         cout << "\tDanh Sach Dich Vu\n";
         printfDV(R->BN.DV);
-        printfT(R->BN.T);
+        if(R->BN.T == NULL) {
+            cout << "Danh sach thuoc cua benh nhan rong.";
+        }
+        else printfT(R->BN.T);
         cout << "Tong vien phi: " << SumBN(S) << endl;
         if(R->BN.Bao_hiem == 1){
         	cout << "Phai tra: " << (SumBN(S)*20)/100;
