@@ -1,0 +1,10 @@
+^D:\BTL-MASTER (1)\BTL-MASTER\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SD:/BTL-master (1)/BTL-master" "-BD:/BTL-master (1)/BTL-master/build" --check-stamp-file "D:/BTL-master (1)/BTL-master/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
